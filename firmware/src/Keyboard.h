@@ -512,7 +512,6 @@ void initKeyboardKana(void);
 
 #define BASE_QWERTY     0
 #define BASE_DVORAK     1
-#define BASE_COLEMAK    2
 #define BASE_JIS        3
 #define BASE_NICOLA_F   4
 #define BASE_MAX        4

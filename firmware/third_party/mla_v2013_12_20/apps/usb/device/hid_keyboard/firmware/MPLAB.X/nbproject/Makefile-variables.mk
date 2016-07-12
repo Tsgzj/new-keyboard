@@ -1,0 +1,20 @@
+#
+# Generated - do not edit!
+#
+# NOCDDL
+#
+CND_BASEDIR=`pwd`
+# Esrille_New_Keyboard configuration
+CND_ARTIFACT_DIR_Esrille_New_Keyboard=dist/Esrille_New_Keyboard/production
+CND_ARTIFACT_NAME_Esrille_New_Keyboard=MPLAB.X.production.hex
+CND_ARTIFACT_PATH_Esrille_New_Keyboard=dist/Esrille_New_Keyboard/production/MPLAB.X.production.hex
+CND_PACKAGE_DIR_Esrille_New_Keyboard=${CND_DISTDIR}/Esrille_New_Keyboard/package
+CND_PACKAGE_NAME_Esrille_New_Keyboard=mplab.x.tar
+CND_PACKAGE_PATH_Esrille_New_Keyboard=${CND_DISTDIR}/Esrille_New_Keyboard/package/mplab.x.tar
+# Esrille_New_Keyboard_with_Mouse configuration
+CND_ARTIFACT_DIR_Esrille_New_Keyboard_with_Mouse=dist/Esrille_New_Keyboard_with_Mouse/production
+CND_ARTIFACT_NAME_Esrille_New_Keyboard_with_Mouse=MPLAB.X.production.hex
+CND_ARTIFACT_PATH_Esrille_New_Keyboard_with_Mouse=dist/Esrille_New_Keyboard_with_Mouse/production/MPLAB.X.production.hex
+CND_PACKAGE_DIR_Esrille_New_Keyboard_with_Mouse=${CND_DISTDIR}/Esrille_New_Keyboard_with_Mouse/package
+CND_PACKAGE_NAME_Esrille_New_Keyboard_with_Mouse=mplab.x.tar
+CND_PACKAGE_PATH_Esrille_New_Keyboard_with_Mouse=${CND_DISTDIR}/Esrille_New_Keyboard_with_Mouse/package/mplab.x.tar
