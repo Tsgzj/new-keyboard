@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 Esrille Inc.
+ * Copyright 2013-2017 Esrille Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,9 @@
 #include "Keyboard.h"
 
 #include <string.h>
-
-#ifdef __XC8
-#include <xc.h>
-#endif
+#include <system.h>
 
 #define MAX_KANA_KEY_NAME    6
-
-#define ENABLE_MTYPE
-#define ENABLE_STICKNEY
 
 static uint8_t const kanaKeys[KANA_MAX + 1][MAX_KANA_KEY_NAME] =
 {
@@ -98,7 +92,7 @@ static uint8_t const vowelSet[] =
     KEY_Y
 };
 
-#ifdef ENABLE_MTYPE
+#ifndef DISABLE_MTYPE
 static uint8_t const mtypeSet[][3] =
 {
     {KEY_A, KEY_N, KEY_N},
@@ -228,7 +222,7 @@ static uint8_t const appleSet[][3] =
     {KEY_LEFTSHIFT, KEY_GRAVE_ACCENT},
 };
 
-#ifdef ENABLE_STICKNEY
+#ifndef DISABLE_STICKNEY
 //
 // Stickney Next
 //
@@ -327,7 +321,7 @@ static uint8_t const matrixNicolaRight[7][12] =
     {ROMA_KUTEN, ROMA_BI, ROMA_ZU, ROMA_BU, ROMA_BE, 0, 0, ROMA_NU, ROMA_YU, ROMA_MU, ROMA_WA, ROMA_XO},
 };
 
-#ifdef ENABLE_MTYPE
+#ifndef DISABLE_MTYPE
 //
 // M type
 //
@@ -392,17 +386,17 @@ static uint8_t sent[3];
 static uint8_t last[3];
 static uint8_t lastMod;
 
-void initKeyboardKana(void)
+void loadKanaSettings(void)
 {
-    mode = eeprom_read(EEPROM_KANA);
+    mode = ReadNvram(EEPROM_KANA);
     if (KANA_MAX < mode)
         mode = 0;
 
-    led = eeprom_read(EEPROM_LED);
+    led = ReadNvram(EEPROM_LED);
     if (LED_MAX < led)
         led = LED_DEFAULT;
 
-    ime = eeprom_read(EEPROM_IME);
+    ime = ReadNvram(EEPROM_IME);
     if (IME_MAX < ime)
         ime = 0;
 }
@@ -417,7 +411,7 @@ void switchLED(void)
     ++led;
     if (LED_MAX < led)
         led = 0;
-    eeprom_write(EEPROM_LED, led);
+    WriteNvram(EEPROM_LED, led);
     emitLEDName();
 }
 
@@ -429,9 +423,17 @@ void emitKanaName(void)
 void switchKana(void)
 {
     ++mode;
+#ifdef DISABLE_MTYPE
+    if (mode == KANA_MTYPE)
+        ++mode;
+#endif
+#ifdef DISABLE_STICKNEY
+    if (mode == KANA_STICKNEY)
+        ++mode;
+#endif
     if (KANA_MAX < mode)
         mode = 0;
-    eeprom_write(EEPROM_KANA, mode);
+    WriteNvram(EEPROM_KANA, mode);
     emitKanaName();
 }
 
@@ -445,7 +447,7 @@ void switchIME(void)
     ++ime;
     if (IME_MAX < ime)
         ime = 0;
-    eeprom_write(EEPROM_IME, ime);
+    WriteNvram(EEPROM_IME, ime);
     emitIMEName();
 }
 
@@ -463,7 +465,7 @@ static void processRomaji(uint8_t roma, uint8_t a[])
             a[i++] = 0;
         return;
     }
-#ifdef ENABLE_MTYPE
+#ifndef DISABLE_MTYPE
     if (ROMA_ANN <= roma && roma <= ROMA_Q) {
         memcpy(a, mtypeSet[roma - ROMA_ANN], 3);
         return;
@@ -683,11 +685,11 @@ int8_t processKeysKana(const uint8_t* current, const uint8_t* processed, uint8_t
         return processKana(current, processed, report, matrixTron, matrixTronLeft, matrixTronRight);
     case KANA_NICOLA:
         return processKana(current, processed, report, matrixNicola, matrixNicolaLeft, matrixNicolaRight);
-#ifdef ENABLE_MTYPE
+#ifndef DISABLE_MTYPE
     case KANA_MTYPE:
         return processKana(current, processed, report, matrixMtype, matrixMtypeShift, matrixMtypeShift);
 #endif
-#ifdef ENABLE_STICKNEY
+#ifndef DISABLE_STICKNEY
     case KANA_STICKNEY:
         return processKana(current, processed, report, matrixStickney, matrixStickneyShift, matrixStickneyShift);
 #endif
