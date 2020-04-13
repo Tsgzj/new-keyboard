@@ -503,7 +503,8 @@ void initKeyboard(void);
 void initKeyboardBase(void);
 void initKeyboardKana(void);
 
-#define KEY_FN          0xF0
+#define KEY_FN 0xF0
+#define KEY_FN2 0xF1
 #define KEY_DAKUTEN     0xF3
 #define KEY_HANDAKU     0xF4
 
@@ -512,7 +513,7 @@ void initKeyboardKana(void);
 
 #define BASE_QWERTY     0
 #define BASE_DVORAK     1
-#define BASE_RSTHD      2
+#define BASE_RSTHL      2
 #define BASE_JIS        3
 #define BASE_NICOLA_F   4
 #define BASE_MAX        4
